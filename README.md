@@ -1,58 +1,35 @@
-# DIO - Trilha .NET - API e Entity Framework
-www.dio.me
+## INSTRUÇÕES PARA O TESTE TÉCNICO
 
-## Desafio de projeto
-Para este desafio, você precisará usar seus conhecimentos adquiridos no módulo de API e Entity Framework, da trilha .NET da DIO.
+- Crie um fork deste projeto (https://gitlab.com/Pottencial/tech-test-payment-api/-/forks/new). É preciso estar logado na sua conta Gitlab;
+- Adicione @Pottencial (Pottencial Seguradora) como membro do seu fork. Você pode fazer isto em  https://gitlab.com/`your-user`/tech-test-payment-api/settings/members;
+ - Quando você começar, faça um commit vazio com a mensagem "Iniciando o teste de tecnologia" e quando terminar, faça o commit com uma mensagem "Finalizado o teste de tecnologia";
+ - Commit após cada ciclo de refatoração pelo menos;
+ - Não use branches;
+ - Você deve prover evidências suficientes de que sua solução está completa indicando, no mínimo, que ela funciona;
 
-## Contexto
-Você precisa construir um sistema gerenciador de tarefas, onde você poderá cadastrar uma lista de tarefas que permitirá organizar melhor a sua rotina.
+## O TESTE
+- Construir uma API REST utilizando .Net Core, Java ou NodeJs (com Typescript);
+- A API deve expor uma rota com documentação swagger (http://.../api-docs).
+- A API deve possuir 3 operações:
+  1) Registrar venda: Recebe os dados do vendedor + itens vendidos. Registra venda com status "Aguardando pagamento";
+  2) Buscar venda: Busca pelo Id da venda;
+  3) Atualizar venda: Permite que seja atualizado o status da venda.
+     * OBS.: Possíveis status: `Pagamento aprovado` | `Enviado para transportadora` | `Entregue` | `Cancelada`.
+- Uma venda contém informação sobre o vendedor que a efetivou, data, identificador do pedido e os itens que foram vendidos;
+- O vendedor deve possuir id, cpf, nome, e-mail e telefone;
+- A inclusão de uma venda deve possuir pelo menos 1 item;
+- A atualização de status deve permitir somente as seguintes transições: 
+  - De: `Aguardando pagamento` Para: `Pagamento Aprovado`
+  - De: `Aguardando pagamento` Para: `Cancelada`
+  - De: `Pagamento Aprovado` Para: `Enviado para Transportadora`
+  - De: `Pagamento Aprovado` Para: `Cancelada`
+  - De: `Enviado para Transportador`. Para: `Entregue`
+- A API não precisa ter mecanismos de autenticação/autorização;
+- A aplicação não precisa implementar os mecanismos de persistência em um banco de dados, eles podem ser persistidos "em memória".
 
-Essa lista de tarefas precisa ter um CRUD, ou seja, deverá permitir a você obter os registros, criar, salvar e deletar esses registros.
-
-A sua aplicação deverá ser do tipo Web API ou MVC, fique a vontade para implementar a solução que achar mais adequado.
-
-A sua classe principal, a classe de tarefa, deve ser a seguinte:
-
-![Diagrama da classe Tarefa](diagrama.png)
-
-Não se esqueça de gerar a sua migration para atualização no banco de dados.
-
-## Métodos esperados
-É esperado que você crie o seus métodos conforme a seguir:
-
-
-**Swagger**
-
-
-![Métodos Swagger](swagger.png)
-
-
-**Endpoints**
-
-
-| Verbo  | Endpoint                | Parâmetro | Body          |
-|--------|-------------------------|-----------|---------------|
-| GET    | /Tarefa/{id}            | id        | N/A           |
-| PUT    | /Tarefa/{id}            | id        | Schema Tarefa |
-| DELETE | /Tarefa/{id}            | id        | N/A           |
-| GET    | /Tarefa/ObterTodos      | N/A       | N/A           |
-| GET    | /Tarefa/ObterPorTitulo  | titulo    | N/A           |
-| GET    | /Tarefa/ObterPorData    | data      | N/A           |
-| GET    | /Tarefa/ObterPorStatus  | status    | N/A           |
-| POST   | /Tarefa                 | N/A       | Schema Tarefa |
-
-Esse é o schema (model) de Tarefa, utilizado para passar para os métodos que exigirem
-
-```json
-{
-  "id": 0,
-  "titulo": "string",
-  "descricao": "string",
-  "data": "2022-06-08T01:31:07.056Z",
-  "status": "Pendente"
-}
-```
-
-
-## Solução
-O código está pela metade, e você deverá dar continuidade obedecendo as regras descritas acima, para que no final, tenhamos um programa funcional. Procure pela palavra comentada "TODO" no código, em seguida, implemente conforme as regras acima.
+## PONTOS QUE SERÃO AVALIADOS
+- Arquitetura da aplicação - embora não existam muitos requisitos de negócio, iremos avaliar como o projeto foi estruturada, bem como camadas e suas responsabilidades;
+- Programação orientada a objetos;
+- Boas práticas e princípios como SOLID, DDD (opcional), DRY, KISS;
+- Testes unitários;
+- Uso correto do padrão REST;
